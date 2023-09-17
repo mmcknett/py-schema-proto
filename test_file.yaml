@@ -1,0 +1,10 @@
+main_key:
+  first_field: first_value
+  a_list:
+    - item1
+    - item2
+    - item3
+  complex:
+    float_field: 25.3
+    int_field: 42
+    str_field: "Hello world"
