@@ -8,3 +8,5 @@ main_key:
     float_field: 25.3
     int_field: 42
     str_field: "Hello world"
+
+secondary_key: 5

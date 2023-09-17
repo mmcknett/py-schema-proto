@@ -7,6 +7,15 @@ with open('test_file.yaml', 'r') as file:
 # print('Test file:')
 # print(test_file)
 
+def validate(schema_defn, test_file_in):
+  try:
+    result = schema_defn.validate(test_file_in)
+    print(f"INFO: File passes schema validation. Result:\n{result}")
+  except SchemaWrongKeyError as e:
+    print(f"WARNING: Unknown key. Do you need to add a new field to the schema?\n  DETAILS: {e}")
+  except SchemaError as e:
+    print(f"Generic schema ERROR: File does not pass schema validation.\n  DETAILS: {e}")
+
 schema_def = Schema({
   "main_key": {
     "a_list": [str],
@@ -18,14 +27,11 @@ schema_def = Schema({
   }
 })
 
-try:
-  result = schema_def.validate(test_file)
-  print(result)
-except SchemaError as e:
-  if isinstance(e, SchemaWrongKeyError):
-    print(f"WARNING: Unknown key. Do you need to add a new field to the schema?\n{e}")
-  else:
-    print(f"Generic schema validation error:\n\t{e}")
+validate(schema_def, test_file)
 
+completely_different_schema_def = Schema({
+  "secondary_key": int
+})
 
+validate(completely_different_schema_def, test_file)
 
